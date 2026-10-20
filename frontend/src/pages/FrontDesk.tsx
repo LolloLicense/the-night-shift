@@ -5,7 +5,7 @@ import KeyBoard from "../components/KeyBoard";
 
 function FrontDesk() {
   return (
-    <main className="relative min-h-screen bg-[url('/images/front-desk.webp')] bg-cover bg-center">
+    <section className="relative min-h-screen bg-[url('/images/front-desk.webp')] bg-cover bg-center">
       <Header />
 
       <div className="absolute top-2/6 left-2/4 flex w-[80%] max-w-5xl -translate-x-1/2 items-start justify-center gap-6">
@@ -17,7 +17,7 @@ function FrontDesk() {
       </div>
 
       <DeskTools />
-    </main>
+    </section>
   );
 }
 

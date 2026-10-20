@@ -1,9 +1,13 @@
 import FrontDesk from "./pages/FrontDesk";
+import NightBriefing from "./pages/NightBriefing";
+import StartScreen from "./pages/StartScreen";
 
 function App() {
   return (
     <main>
-      <FrontDesk />
+      {/* <StartScreen /> */}
+      <NightBriefing />
+      {/* <FrontDesk /> */}
     </main>
   );
 }
