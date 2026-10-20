@@ -1,3 +1,4 @@
+import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
 import KeyBoard from "../components/KeyBoard";
@@ -14,6 +15,8 @@ function FrontDesk() {
       <div className="absolute top-[35%] right-[25%] w-86">
         <GuestCard />
       </div>
+
+      <DeskTools />
     </main>
   );
 }
