@@ -5,18 +5,28 @@ import KeyBoard from "../components/KeyBoard";
 
 function FrontDesk() {
   return (
-    <section className="relative min-h-screen bg-[url('/images/front-desk.webp')] bg-cover bg-center">
-      <Header />
+    <section className="h-screen overflow-hidden">
+      <div className="relative h-full w-full overflow-hidden">
+        {/* Background */}
+        <img
+          src="/images/front-desk.webp"
+          alt=""
+          className="block h-full w-full object-cover"
+        />
 
-      <div className="absolute top-2/6 left-2/4 flex w-[80%] max-w-5xl -translate-x-1/2 items-start justify-center gap-6">
-        <KeyBoard />
+        {/* UI */}
+        <Header />
 
-        <div className="w-80 mt-6">
-          <GuestCard />
+        <div className="absolute top-[35%] left-[45%] flex w-[90%] -translate-x-1/2 items-start justify-center gap-[2vw]">
+          <KeyBoard />
+
+          <div className=" w-[20vw]">
+            <GuestCard />
+          </div>
         </div>
-      </div>
 
-      <DeskTools />
+        <DeskTools />
+      </div>
     </section>
   );
 }

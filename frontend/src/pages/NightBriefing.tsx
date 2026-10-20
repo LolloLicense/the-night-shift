@@ -1,4 +1,7 @@
-function NightBriefing() {
+type NightBriefingProps = {
+  onStartShift: () => void;
+};
+function NightBriefing({ onStartShift }: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
       <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink">
@@ -29,6 +32,7 @@ function NightBriefing() {
 
         <button
           type="button"
+          onClick={onStartShift}
           className="mt-8 cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans font-semibold text-xs tracking-widest text-cream uppercase"
         >
           Start shift

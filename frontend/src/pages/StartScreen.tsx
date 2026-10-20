@@ -1,4 +1,7 @@
-function StartScreen() {
+type StartScreenProps = {
+  onStart: () => void;
+};
+function StartScreen({ onStart }: StartScreenProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-shift-start.webp')] bg-cover bg-center">
       <div className="absolute top-1/5 left-1/5 flex flex-col items-start">
@@ -14,6 +17,7 @@ function StartScreen() {
             </p>
             <button
               type="button"
+              onClick={onStart}
               className="cursor-pointer rounded-lg uppercase font-semibold bg-ruby px-8 py-3 text-sm tracking-widest text-cream"
             >
               Start night
