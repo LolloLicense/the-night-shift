@@ -8,12 +8,12 @@ function FrontDesk() {
     <main className="relative min-h-screen bg-[url('/images/front-desk.webp')] bg-cover bg-center">
       <Header />
 
-      <div className="absolute top-2/5 left-1/6">
+      <div className="absolute top-2/6 left-2/4 flex w-[80%] max-w-5xl -translate-x-1/2 items-start justify-center gap-6">
         <KeyBoard />
-      </div>
 
-      <div className="absolute top-[35%] right-[25%] w-86">
-        <GuestCard />
+        <div className="w-80 mt-6">
+          <GuestCard />
+        </div>
       </div>
 
       <DeskTools />
