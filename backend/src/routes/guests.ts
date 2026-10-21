@@ -23,4 +23,16 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    const guest = await Guest.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(guest);
+  } catch (error) {
+    res.status(500).json({ message: "Could not update guest" });
+  }
+});
+
 export default router;
