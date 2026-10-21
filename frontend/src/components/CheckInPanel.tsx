@@ -10,7 +10,7 @@ function CheckInPanel({ room, guest, onCheckIn }: CheckInPanelProps) {
   return (
     <div className="flex gap-4 items-center">
       <p className="tracking-widest font-semibold uppercase">
-        Room {room.roomNumber}
+        Room {room.roomNumber} / {room.roomType}
       </p>
       <button
         type="button"

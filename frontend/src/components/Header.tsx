@@ -2,7 +2,7 @@ import ShiftStatus from "./ShiftStatus";
 
 function Header() {
   return (
-    <header className="absolute top-0 left-0 z-10 flex w-full items-start justify-between p-6">
+    <header className="absolute z-50 top-0 left-0 flex w-full items-start justify-between p-6">
       <ShiftStatus />
 
       <button

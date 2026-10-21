@@ -26,3 +26,22 @@ export type Room = {
   petFriendly: boolean;
   location: string;
 };
+
+export type RoomAssignment = {
+  guestId: string;
+  roomNumber: number;
+};
+
+export type CheckInResult = {
+  guestId: string;
+  roomNumber: number;
+  correctRoomType: boolean;
+  upgrade: boolean;
+  downgrade: boolean;
+  requirementsMet: string[];
+  requirementsMissed: string[];
+  preferencesMet: string[];
+  preferencesMissed: string[];
+  rate: number;
+  tip: number;
+};

@@ -3,7 +3,8 @@ import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
 import KeyBoard from "../components/KeyBoard";
-import type { Room, Scenario } from "../types/game";
+import type { CheckInResult, Room, Scenario } from "../types/game";
+import CheckInResultModal from "../components/CheckInResultModal";
 
 type FrontDeskProps = {
   scenario: Scenario;
@@ -12,6 +13,8 @@ type FrontDeskProps = {
   setSelectedRoom: React.Dispatch<React.SetStateAction<Room | null>>;
   onCheckIn: (guestId: string, roomNumber: number) => void;
   currentGuestIndex: number;
+  checkInResult: CheckInResult | null;
+  onNextGuest: () => void;
 };
 
 function FrontDesk({
@@ -21,6 +24,8 @@ function FrontDesk({
   setSelectedRoom,
   onCheckIn,
   currentGuestIndex,
+  checkInResult,
+  onNextGuest,
 }: FrontDeskProps) {
   const currentGuest = scenario.guests[currentGuestIndex];
   return (
@@ -52,7 +57,17 @@ function FrontDesk({
           selectedRoom={selectedRoom}
           currentGuest={currentGuest}
           onCheckIn={onCheckIn}
+          checkInResult={checkInResult}
         />
+
+        {checkInResult && selectedRoom && (
+          <CheckInResultModal
+            result={checkInResult}
+            guest={currentGuest}
+            room={selectedRoom}
+            onNextGuest={onNextGuest}
+          />
+        )}
       </div>
     </section>
   );
