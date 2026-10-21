@@ -1,27 +1,24 @@
 type NightBriefingProps = {
+  briefing: string;
   onStartShift: () => void;
 };
-function NightBriefing({ onStartShift }: NightBriefingProps) {
+function NightBriefing({ briefing, onStartShift }: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
       <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink">
         <h1 className="font-display text-xl">To whoever's on tonight,</h1>
 
         <div className="mt-5 space-y-4 font-sans text-sm leading-6">
+          <p>{briefing}</p>
+
           <p>
-            Quiet one tonight. Six guests expected.
-            <br />
-            At least, that&apos;s what the book says.
+            Check their requests before handing out keys. Keep them happy and
+            they might make it worth your while.
           </p>
 
           <p>
-            A few of them have made rather specific requests. Do your best to
-            keep everyone happy. The happier the guest, the better the tip.
-          </p>
-
-          <p>
-            And please check the guest log before handing out keys. Last time we
-            had two strangers almost sharing 203.
+            And use the guest log. I&apos;d rather not explain another double
+            booking.
           </p>
         </div>
 

@@ -2,8 +2,14 @@ import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
 import KeyBoard from "../components/KeyBoard";
+import type { Scenario } from "../types/game";
 
-function FrontDesk() {
+type FrontDeskProps = {
+  scenario: Scenario;
+};
+
+function FrontDesk({ scenario }: FrontDeskProps) {
+  const currentGuest = scenario.guests[0];
   return (
     <section className="h-screen overflow-hidden">
       <div className="relative h-full w-full overflow-hidden">
@@ -21,7 +27,7 @@ function FrontDesk() {
           <KeyBoard />
 
           <div className=" w-[20vw]">
-            <GuestCard />
+            <GuestCard guest={currentGuest} />
           </div>
         </div>
 
