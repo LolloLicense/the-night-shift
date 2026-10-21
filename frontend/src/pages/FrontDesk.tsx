@@ -1,14 +1,23 @@
+import type React from "react";
 import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
 import KeyBoard from "../components/KeyBoard";
-import type { Scenario } from "../types/game";
+import type { Room, Scenario } from "../types/game";
 
 type FrontDeskProps = {
   scenario: Scenario;
+  rooms: Room[];
+  selectedRoom: Room | null;
+  setSelectedRoom: React.Dispatch<React.SetStateAction<Room | null>>;
 };
 
-function FrontDesk({ scenario }: FrontDeskProps) {
+function FrontDesk({
+  rooms,
+  scenario,
+  selectedRoom,
+  setSelectedRoom,
+}: FrontDeskProps) {
   const currentGuest = scenario.guests[0];
   return (
     <section className="h-screen overflow-hidden">
@@ -23,15 +32,19 @@ function FrontDesk({ scenario }: FrontDeskProps) {
         {/* UI */}
         <Header />
 
-        <div className="absolute top-[35%] left-[45%] flex w-[90%] -translate-x-1/2 items-start justify-center gap-[2vw]">
-          <KeyBoard />
+        <div className="absolute top-[38%] xl:top-[36%] left-[45%] flex w-[90%] -translate-x-1/2 items-center justify-center gap-[2vw]">
+          <KeyBoard
+            rooms={rooms}
+            selectedRoom={selectedRoom}
+            setSelectedRoom={setSelectedRoom}
+          />
 
-          <div className=" w-[20vw]">
+          <div className="w-[clamp(260px,22vw,360px)]">
             <GuestCard guest={currentGuest} />
           </div>
         </div>
 
-        <DeskTools />
+        <DeskTools selectedRoom={selectedRoom} />
       </div>
     </section>
   );

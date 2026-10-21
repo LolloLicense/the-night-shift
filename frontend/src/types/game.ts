@@ -16,3 +16,13 @@ export type Scenario = {
   guests: Guest[];
   briefing: string;
 };
+
+export type Room = {
+  _id: string;
+  roomNumber: number;
+  roomType: string;
+  quiet: boolean;
+  smoking: boolean;
+  petFriendly: boolean;
+  location: string;
+};

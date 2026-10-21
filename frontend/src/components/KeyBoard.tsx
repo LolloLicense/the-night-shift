@@ -1,12 +1,22 @@
 import RoomKey from "./RoomKey";
+import type { Room } from "../types/game";
 
-const rooms = [101, 102, 103, 104, 105, 201, 202, 203, 204, 205];
+type KeyBoardProps = {
+  rooms: Room[];
+  selectedRoom: Room | null;
+  setSelectedRoom: React.Dispatch<React.SetStateAction<Room | null>>;
+};
 
-function KeyBoard() {
+function KeyBoard({ rooms, selectedRoom, setSelectedRoom }: KeyBoardProps) {
   return (
     <div className="grid grid-cols-5 gap-3">
       {rooms.map((room) => (
-        <RoomKey key={room} roomNumber={room} />
+        <RoomKey
+          key={room._id}
+          roomNumber={room.roomNumber}
+          isSelected={selectedRoom?._id === room._id}
+          onSelect={() => setSelectedRoom(room)}
+        />
       ))}
     </div>
   );

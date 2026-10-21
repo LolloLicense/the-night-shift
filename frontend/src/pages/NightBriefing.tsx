@@ -5,8 +5,10 @@ type NightBriefingProps = {
 function NightBriefing({ briefing, onStartShift }: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink">
-        <h1 className="font-display text-xl">To whoever's on tonight,</h1>
+      <div className="absolute top-[30%] left-1/2 w-96 -translate-x-1/2 text-ink">
+        <h1 className="font-display text-xl font-bold">
+          To whoever's on tonight,
+        </h1>
 
         <div className="mt-5 space-y-4 font-sans text-sm leading-6">
           <p>{briefing}</p>
@@ -22,7 +24,7 @@ function NightBriefing({ briefing, onStartShift }: NightBriefingProps) {
           </p>
         </div>
 
-        <div className="mt-6 font-display italic">
+        <div className="mt-6 font-display italic font-bold">
           <p>Good luck, dont call me</p>
           <p>Boss man</p>
         </div>

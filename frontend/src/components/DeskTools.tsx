@@ -1,8 +1,16 @@
-function DeskTools() {
+import type { Room } from "../types/game";
+import CheckInPanel from "./CheckInPanel";
+import { AnimatePresence, motion } from "motion/react";
+
+type DeskToolsProps = {
+  selectedRoom: Room | null;
+};
+
+function DeskTools({ selectedRoom }: DeskToolsProps) {
   return (
     <div className="absolute bottom-6 left-6 flex w-[calc(100%-3rem)] items-end justify-between">
       {/* Left tools */}
-      <div className="flex h-14 items-center gap-2 rounded-md border border-cream/50 bg-ink/90 px-4 text-cream">
+      <div className="flex h-14 items-center gap-2 rounded-md border border-cream/50 bg-ink/90 backdrop-blur-md px-4 text-cream">
         <button
           type="button"
           aria-label="Shift notes"
@@ -19,11 +27,24 @@ function DeskTools() {
           <img src="/icons/log.svg" alt="" className="size-5" />
         </button>
       </div>
+      <AnimatePresence>
+        {selectedRoom && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.2 }}
+            className="flex h-14 items-center gap-2 rounded-md border border-cream/50 bg-ink/90 px-4 text-cream backdrop-blur-md"
+          >
+            <CheckInPanel room={selectedRoom} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Cash */}
-      <div className="flex gap-2 h-14 items-center rounded-md border border-cream/50 bg-ink/90 px-4 text-cream">
+      <div className="flex gap-2 h-14 items-center rounded-md border border-cream/50 bg-ink/90 backdrop-blur-md px-4 text-cream">
         <img src="/icons/money.svg" alt="" className="size-5" />
-        <span>240</span>
+        <span className="tracking-widest">240</span>
       </div>
     </div>
   );

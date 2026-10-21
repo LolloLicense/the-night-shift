@@ -1,13 +1,18 @@
 type RoomKeyProps = {
   roomNumber: number;
+  isSelected: boolean;
+  onSelect: () => void;
 };
 
-function RoomKey({ roomNumber }: RoomKeyProps) {
+function RoomKey({ roomNumber, isSelected, onSelect }: RoomKeyProps) {
   return (
     <button
-      type="button"
-      className="group relative cursor-pointer transition-transform duration-200 ease-out hover:-translate-y-2 hover:scale-105"
-      aria-label={`Room ${roomNumber}`}
+      onClick={onSelect}
+      className={`group relative cursor-pointer transition-transform duration-200 ease-out ${
+        isSelected
+          ? "-translate-y-2 scale-105"
+          : "hover:-translate-y-2 hover:scale-105"
+      }`}
     >
       <img
         src="/images/room-key.png"
