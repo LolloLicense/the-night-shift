@@ -1,16 +1,23 @@
-import type React from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
 import KeyBoard from "../components/KeyBoard";
-import type { CheckInResult, Room, Scenario } from "../types/game";
+import type {
+  CheckInResult,
+  Room,
+  Scenario,
+  RoomAssignment,
+} from "../types/game";
 import CheckInResultModal from "../components/CheckInResultModal";
+import GuestLog from "../components/GuestLog";
 
 type FrontDeskProps = {
   scenario: Scenario;
   rooms: Room[];
   selectedRoom: Room | null;
-  setSelectedRoom: React.Dispatch<React.SetStateAction<Room | null>>;
+  setSelectedRoom: Dispatch<SetStateAction<Room | null>>;
+  assignments: RoomAssignment[];
   onCheckIn: (guestId: string, roomNumber: number) => void;
   currentGuestIndex: number;
   checkInResult: CheckInResult | null;
@@ -22,12 +29,15 @@ function FrontDesk({
   scenario,
   selectedRoom,
   setSelectedRoom,
+  assignments,
   onCheckIn,
   currentGuestIndex,
   checkInResult,
   onNextGuest,
 }: FrontDeskProps) {
+  const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
   const currentGuest = scenario.guests[currentGuestIndex];
+
   return (
     <section className="h-screen overflow-hidden">
       <div className="relative h-full w-full overflow-hidden">
@@ -41,14 +51,14 @@ function FrontDesk({
         {/* UI */}
         <Header />
 
-        <div className="absolute top-[38%] xl:top-[36%] left-[45%] flex w-[90%] -translate-x-1/2 items-center justify-center gap-[2vw]">
+        <div className="absolute top-2/5 xl:top-[33%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
             selectedRoom={selectedRoom}
             setSelectedRoom={setSelectedRoom}
           />
 
-          <div className="w-[clamp(260px,22vw,360px)]">
+          <div className="w-[clamp(270px,22vw,460px)]">
             <GuestCard guest={currentGuest} />
           </div>
         </div>
@@ -58,7 +68,15 @@ function FrontDesk({
           currentGuest={currentGuest}
           onCheckIn={onCheckIn}
           checkInResult={checkInResult}
+          onOpenGuestLog={() => setIsGuestLogOpen((current) => !current)}
         />
+        {isGuestLogOpen && (
+          <GuestLog
+            rooms={rooms}
+            assignments={assignments}
+            guests={scenario.guests}
+          />
+        )}
 
         {checkInResult && selectedRoom && (
           <CheckInResultModal

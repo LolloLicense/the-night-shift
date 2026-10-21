@@ -7,6 +7,7 @@ type DeskToolsProps = {
   currentGuest: Guest;
   onCheckIn: (guestId: string, roomNumber: number) => void;
   checkInResult: CheckInResult | null;
+  onOpenGuestLog: () => void;
 };
 
 function DeskTools({
@@ -14,6 +15,7 @@ function DeskTools({
   currentGuest,
   onCheckIn,
   checkInResult,
+  onOpenGuestLog,
 }: DeskToolsProps) {
   return (
     <div className="absolute z-50 bottom-6 left-6 flex w-[calc(100%-3rem)] items-end justify-between">
@@ -29,6 +31,7 @@ function DeskTools({
 
         <button
           type="button"
+          onClick={onOpenGuestLog}
           aria-label="Guest log"
           className="flex size-10 cursor-pointer items-center justify-center"
         >

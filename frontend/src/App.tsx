@@ -17,6 +17,7 @@ function App() {
     rooms,
     selectedRoom,
     setSelectedRoom,
+    assignments,
     currentGuestIndex,
     checkInResult,
     startNight,
@@ -66,6 +67,7 @@ function App() {
                 rooms={rooms}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
+                assignments={assignments}
                 onCheckIn={checkInGuest}
                 currentGuestIndex={currentGuestIndex}
                 checkInResult={checkInResult}
