@@ -1,12 +1,14 @@
-import type { Room } from "../types/game";
+import type { Room, Guest } from "../types/game";
 import CheckInPanel from "./CheckInPanel";
 import { AnimatePresence, motion } from "motion/react";
 
 type DeskToolsProps = {
   selectedRoom: Room | null;
+  currentGuest: Guest;
+  onCheckIn: (guestId: string, roomNumber: number) => void;
 };
 
-function DeskTools({ selectedRoom }: DeskToolsProps) {
+function DeskTools({ selectedRoom, currentGuest, onCheckIn }: DeskToolsProps) {
   return (
     <div className="absolute bottom-6 left-6 flex w-[calc(100%-3rem)] items-end justify-between">
       {/* Left tools */}
@@ -36,7 +38,11 @@ function DeskTools({ selectedRoom }: DeskToolsProps) {
             transition={{ duration: 0.2 }}
             className="flex h-14 items-center gap-2 rounded-md border border-cream/50 bg-ink/90 px-4 text-cream backdrop-blur-md"
           >
-            <CheckInPanel room={selectedRoom} />
+            <CheckInPanel
+              room={selectedRoom}
+              guest={currentGuest}
+              onCheckIn={onCheckIn}
+            />
           </motion.div>
         )}
       </AnimatePresence>

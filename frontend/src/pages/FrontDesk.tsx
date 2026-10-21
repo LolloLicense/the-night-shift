@@ -10,6 +10,8 @@ type FrontDeskProps = {
   rooms: Room[];
   selectedRoom: Room | null;
   setSelectedRoom: React.Dispatch<React.SetStateAction<Room | null>>;
+  onCheckIn: (guestId: string, roomNumber: number) => void;
+  currentGuestIndex: number;
 };
 
 function FrontDesk({
@@ -17,8 +19,10 @@ function FrontDesk({
   scenario,
   selectedRoom,
   setSelectedRoom,
+  onCheckIn,
+  currentGuestIndex,
 }: FrontDeskProps) {
-  const currentGuest = scenario.guests[0];
+  const currentGuest = scenario.guests[currentGuestIndex];
   return (
     <section className="h-screen overflow-hidden">
       <div className="relative h-full w-full overflow-hidden">
@@ -44,7 +48,11 @@ function FrontDesk({
           </div>
         </div>
 
-        <DeskTools selectedRoom={selectedRoom} />
+        <DeskTools
+          selectedRoom={selectedRoom}
+          currentGuest={currentGuest}
+          onCheckIn={onCheckIn}
+        />
       </div>
     </section>
   );

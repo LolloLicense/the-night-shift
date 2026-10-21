@@ -4,7 +4,7 @@ import FrontDesk from "./pages/FrontDesk";
 import NightBriefing from "./pages/NightBriefing";
 import StartScreen from "./pages/StartScreen";
 import { AnimatePresence, easeInOut, motion } from "motion/react";
-import type { Room, Scenario } from "./types/game";
+import type { Room, Scenario, RoomAssignment } from "./types/game";
 
 type GameScreen = "start" | "briefing" | "front-desk";
 
@@ -13,6 +13,8 @@ function App() {
   const [scenario, setScenario] = useState<Scenario | null>(null);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [assignments, setAssignments] = useState<RoomAssignment[]>([]);
+  const [currentGuestIndex, setCurrentGuestIndex] = useState(0);
 
   //API
   const startNight = async () => {
@@ -37,6 +39,16 @@ function App() {
     }
   };
 
+  // Checkin
+  const checkInGuest = (guestId: string, roomNumber: number) => {
+    const newAssignment: RoomAssignment = {
+      guestId,
+      roomNumber,
+    };
+
+    setAssignments((current) => [...current, newAssignment]);
+    console.log("CHECKED IN:", newAssignment);
+  };
   return (
     <>
       {/* Smaller than 1040px */}
@@ -71,6 +83,8 @@ function App() {
                 rooms={rooms}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
+                onCheckIn={checkInGuest}
+                currentGuestIndex={currentGuestIndex}
               />
             )}
           </motion.main>
