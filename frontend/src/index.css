@@ -1,17 +1,17 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: "DM Serif Display";
-  src: url("/fonts/DMSerifDisplay-Regular.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Playfair Display";
+  src: url("/fonts/PlayfairDisplay.woff2") format("woff2");
+  font-weight: 400 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "DM Serif Display";
-  src: url("/fonts/DMSerifDisplay-Italic.woff2") format("woff2");
-  font-weight: 400;
+  font-family: "Playfair Display";
+  src: url("/fonts/PlayfairDisplay-Italic.woff2") format("woff2");
+  font-weight: 400 900;
   font-style: italic;
   font-display: swap;
 }
