@@ -32,10 +32,8 @@ function CheckInResultModal({
             <h2 className="font-display text-3xl font-bold leading-tight uppercase">
               {guest.name}
             </h2>
-
-            <div aria-hidden="true" />
           </div>
-          <div className="p-4 flex border-b-2 border-ruby justify-between">
+          <div className="p-2 flex border-b-2 border-ruby justify-between">
             <div className="flex flex-col gap-1">
               <p className="mt-1 text-s font-semibold tracking-widest uppercase">
                 Room: {room.roomNumber}
@@ -56,19 +54,19 @@ function CheckInResultModal({
 
           <div className="flex-1">
             {result.downgrade && (
-              <p className="border-b-2 border-ruby p-4 font-semibold text-ruby uppercase">
+              <p className="border-b-2 border-ruby p-2 font-semibold text-ruby uppercase">
                 Room downgrade
               </p>
             )}
 
             {result.upgrade && (
-              <p className="border-b-2 border-ruby p-4 font-semibold uppercase">
+              <p className="border-b-2 border-ruby p-2 font-semibold uppercase">
                 Complimentary upgrade
               </p>
             )}
 
             {result.requirementsMissed.length > 0 && (
-              <div className="flex items-center gap-6 border-b-2 border-ruby p-4">
+              <div className="flex items-center gap-6 border-b-2 border-ruby p-2">
                 <img
                   src="/icons/warning.svg"
                   alt=""
@@ -92,7 +90,7 @@ function CheckInResultModal({
             )}
 
             {result.preferencesMissed.length > 0 && (
-              <div className="flex items-center gap-6 border-b-2 border-ruby p-4">
+              <div className="flex items-center gap-6 border-b-2 border-ruby p-2">
                 <img
                   src="/icons/warning.svg"
                   alt=""

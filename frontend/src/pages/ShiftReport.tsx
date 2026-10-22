@@ -19,8 +19,8 @@ function ShiftReport({
 }: ShiftReportProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink">
-        <h1 className="border-b-2 border-ruby pb-2 text-center font-display text-3xl font-bold uppercase">
+      <div className="absolute top-[18%] left-1/2 w-96 -translate-x-1/2 text-ink">
+        <h1 className="border-b-2 border-ruby pb-2 text-center font-display text-2xl font-bold uppercase">
           Shift Complete
         </h1>
 
@@ -28,7 +28,7 @@ function ShiftReport({
           Night Report
         </p>
 
-        <div className="mt-8 space-y-3 font-sans">
+        <div className="mt-4 space-y-3 font-sans">
           <div className="flex justify-between">
             <span>Guests checked in</span>
             <span className="font-semibold">{totalGuests}</span>
@@ -45,7 +45,7 @@ function ShiftReport({
           </div>
         </div>
 
-        <div className="mt-6 border-t-2 border-ruby pt-5 font-sans">
+        <div className="mt-4 border-t-2 border-ruby pt-5 font-sans">
           <div className="flex justify-between">
             <span>Room revenue</span>
             <span>${totalRevenue}</span>

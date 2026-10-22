@@ -71,7 +71,7 @@ function FrontDesk({
         />
 
         {/* FRONDESK ELEMENTS */}
-        <div className="absolute top-1/3 left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
+        <div className="absolute top-[32%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
             selectedRoom={selectedRoom}
@@ -79,7 +79,7 @@ function FrontDesk({
             setSelectedRoom={setSelectedRoom}
           />
 
-          <div className="w-82">
+          <div className="w-76">
             <GuestCard guest={currentGuest} />
           </div>
         </div>
