@@ -5,6 +5,7 @@ type ShiftReportProps = {
   happyGuests: number;
   unhappyGuests: number;
   totalGuests: number;
+  onClockOut: () => void;
 };
 
 function ShiftReport({
@@ -14,11 +15,12 @@ function ShiftReport({
   happyGuests,
   unhappyGuests,
   totalGuests,
+  onClockOut,
 }: ShiftReportProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[30%] left-1/2 w-96 -translate-x-1/2 text-ink">
-        <h1 className="border-b-2 border-ruby pb-3 text-center font-display text-3xl font-bold uppercase">
+      <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink">
+        <h1 className="border-b-2 border-ruby pb-2 text-center font-display text-3xl font-bold uppercase">
           Shift Complete
         </h1>
 
@@ -59,6 +61,23 @@ function ShiftReport({
             <span>${totalEarnings}</span>
           </div>
         </div>
+        <div className="mt-7 text-center">
+          <p className="font-display text-base font-bold">
+            Ready for another night?
+          </p>
+
+          <p className="mx-auto mt-1 max-w-64 font-sans text-xs leading-5 text-ink">
+            Clock out to save your progress and start your next shift.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={onClockOut}
+          className="mx-auto mt-4 block cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase"
+        >
+          Clock out
+        </button>
       </div>
     </section>
   );

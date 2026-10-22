@@ -31,6 +31,7 @@ function App() {
     startNight,
     checkInGuest,
     continueToNextGuest,
+    completeShift,
     clockOut,
   } = useGame();
 
@@ -46,6 +47,11 @@ function App() {
 
   const handleClockOut = () => {
     clockOut();
+    setGameScreen("start");
+  };
+
+  const handleCompleteShift = () => {
+    completeShift();
     setGameScreen("start");
   };
 
@@ -92,6 +98,7 @@ function App() {
                 rooms={rooms}
                 startedAt={startedAt}
                 playerName={player?.name ?? ""}
+                nightNumber={(player?.completedNights ?? 0) + 1}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}
@@ -111,6 +118,7 @@ function App() {
                 happyGuests={shiftResult.happyGuests}
                 unhappyGuests={shiftResult.unhappyGuests}
                 totalGuests={shiftResult.results.length}
+                onClockOut={handleCompleteShift}
               />
             )}
           </motion.main>

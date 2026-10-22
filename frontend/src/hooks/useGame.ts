@@ -189,6 +189,29 @@ export function useGame() {
     return false;
   };
 
+  const completeShift = () => {
+    if (!player || !shiftResult) return;
+
+    const updatedPlayer: Player = {
+      ...player,
+      completedNights: player.completedNights + 1,
+      totalEarnings: player.totalEarnings + shiftResult.totalTips,
+    };
+
+    const updatedPlayers = players.map((savedPlayer) =>
+      savedPlayer.name.toLowerCase() === player.name.toLowerCase()
+        ? updatedPlayer
+        : savedPlayer,
+    );
+
+    setPlayer(updatedPlayer);
+    setPlayers(updatedPlayers);
+
+    localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
+
+    localStorage.removeItem("night-shift-save");
+  };
+
   const clockOut = () => {
     localStorage.removeItem("night-shift-save");
 
@@ -216,6 +239,7 @@ export function useGame() {
     startNight,
     checkInGuest,
     continueToNextGuest,
+    completeShift,
     clockOut,
   };
 }

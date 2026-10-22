@@ -17,6 +17,7 @@ import SettingsModal from "../components/SettingsModal";
 
 type FrontDeskProps = {
   playerName: string;
+  nightNumber: number;
   scenario: Scenario;
   rooms: Room[];
   startedAt: number;
@@ -32,6 +33,7 @@ type FrontDeskProps = {
 
 function FrontDesk({
   playerName,
+  nightNumber,
   rooms,
   startedAt,
   scenario,
@@ -63,6 +65,7 @@ function FrontDesk({
         <Header
           startedAt={startedAt}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          nightNumber={nightNumber}
         />
 
         {/* FRONDESK ELEMENTS */}
