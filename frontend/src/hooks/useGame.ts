@@ -112,8 +112,15 @@ export function useGame() {
 
   const startNight = async () => {
     try {
+      const excludedIds = player?.playedScenarioIds ?? [];
+
+      const scenarioUrl =
+        excludedIds.length > 0
+          ? `http://localhost:3000/api/scenarios/random/easy?exclude=${excludedIds.join(",")}`
+          : "http://localhost:3000/api/scenarios/random/easy";
+
       const [scenarioResponse, roomsResponse] = await Promise.all([
-        fetch("http://localhost:3000/api/scenarios/random/easy"),
+        fetch(scenarioUrl),
         fetch("http://localhost:3000/api/rooms"),
       ]);
 

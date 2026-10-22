@@ -15,7 +15,15 @@ router.get("/", async (req, res) => {
 
 router.get("/random/easy", async (req, res) => {
   try {
-    const scenarios = await Scenario.find({ difficulty: "easy" });
+    const exclude = req.query.exclude;
+
+    const excludedIds =
+      typeof exclude === "string" && exclude ? exclude.split(",") : [];
+
+    const scenarios = await Scenario.find({
+      difficulty: "easy",
+      _id: { $nin: excludedIds },
+    });
 
     if (scenarios.length === 0) {
       return res.status(404).json({ message: "No easy scenarios found" });
