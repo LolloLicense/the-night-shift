@@ -21,6 +21,7 @@ function App() {
     clockInPlayer,
     scenario,
     rooms,
+    startedAt,
     selectedRoom,
     setSelectedRoom,
     assignments,
@@ -80,6 +81,7 @@ function App() {
               <FrontDesk
                 scenario={scenario}
                 rooms={rooms}
+                startedAt={startedAt}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}

@@ -58,4 +58,5 @@ export type SavedGame = {
   rooms: Room[];
   assignments: RoomAssignment[];
   currentGuestIndex: number;
+  startedAt: number;
 };

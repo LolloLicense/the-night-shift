@@ -16,6 +16,7 @@ import SettingsModal from "../components/SettingsModal";
 type FrontDeskProps = {
   scenario: Scenario;
   rooms: Room[];
+  startedAt: number;
   selectedRoom: Room | null;
   setSelectedRoom: Dispatch<SetStateAction<Room | null>>;
   assignments: RoomAssignment[];
@@ -28,6 +29,7 @@ type FrontDeskProps = {
 
 function FrontDesk({
   rooms,
+  startedAt,
   scenario,
   selectedRoom,
   setSelectedRoom,
@@ -53,7 +55,10 @@ function FrontDesk({
         />
 
         {/* UI */}
-        <Header onOpenSettings={() => setIsSettingsOpen(true)} />
+        <Header
+          startedAt={startedAt}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+        />
 
         <div className="absolute top-2/5 xl:top-[33%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard

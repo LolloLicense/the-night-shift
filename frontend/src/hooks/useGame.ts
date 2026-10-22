@@ -33,15 +33,23 @@ export function useGame() {
   const [scenario, setScenario] = useState<Scenario | null>(
     savedGame?.scenario ?? null,
   );
+
   const [rooms, setRooms] = useState<Room[]>(savedGame?.rooms ?? []);
+
   const [assignments, setAssignments] = useState<RoomAssignment[]>(
     savedGame?.assignments ?? [],
   );
+
   const [currentGuestIndex, setCurrentGuestIndex] = useState(
     savedGame?.currentGuestIndex ?? 0,
   );
 
+  const [startedAt, setStartedAt] = useState(
+    savedGame?.startedAt ?? Date.now(),
+  );
+
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+
   const [checkInResult, setCheckInResult] = useState<CheckInResult | null>(
     null,
   );
@@ -54,10 +62,11 @@ export function useGame() {
       rooms,
       assignments,
       currentGuestIndex,
+      startedAt,
     };
 
     localStorage.setItem("night-shift-save", JSON.stringify(gameToSave));
-  }, [scenario, rooms, assignments, currentGuestIndex]);
+  }, [scenario, rooms, assignments, currentGuestIndex, startedAt]);
 
   const clockInPlayer = (name: string) => {
     const trimmedName = name.trim();
@@ -102,6 +111,9 @@ export function useGame() {
 
       setScenario(scenarioData);
       setRooms(roomsData);
+
+      // Start a new shift at 12:00 AM
+      setStartedAt(Date.now());
 
       // Reset game state when a new night starts
       setSelectedRoom(null);
@@ -178,6 +190,7 @@ export function useGame() {
     clockInPlayer,
     scenario,
     rooms,
+    startedAt,
     selectedRoom,
     setSelectedRoom,
     assignments,
