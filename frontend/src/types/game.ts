@@ -54,6 +54,7 @@ export type CheckInResult = {
 };
 
 export type SavedGame = {
+  playerName: string;
   scenario: Scenario;
   rooms: Room[];
   assignments: RoomAssignment[];

@@ -29,7 +29,16 @@ export function useGame() {
     return JSON.parse(savedPlayers) as Player[];
   });
 
-  const [player, setPlayer] = useState<Player | null>(null);
+  const [player, setPlayer] = useState<Player | null>(() => {
+    if (!savedGame?.playerName) return null;
+
+    return (
+      players.find(
+        (player) =>
+          player.name.toLowerCase() === savedGame.playerName.toLowerCase(),
+      ) ?? null
+    );
+  });
 
   const [scenario, setScenario] = useState<Scenario | null>(
     savedGame?.scenario ?? null,
@@ -60,9 +69,10 @@ export function useGame() {
   > | null>(null);
 
   useEffect(() => {
-    if (!scenario) return;
+    if (!scenario || !player) return;
 
     const gameToSave: SavedGame = {
+      playerName: player.name,
       scenario,
       rooms,
       assignments,
