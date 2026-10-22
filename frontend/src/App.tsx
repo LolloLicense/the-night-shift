@@ -73,7 +73,7 @@ function App() {
               <NightBriefing
                 briefing={scenario.briefing}
                 playerName={player?.name ?? ""}
-                onStartShift={() => setGameScreen("front-desk")}
+                onContinue={() => setGameScreen("front-desk")}
               />
             )}
 
@@ -82,6 +82,7 @@ function App() {
                 scenario={scenario}
                 rooms={rooms}
                 startedAt={startedAt}
+                playerName={player?.name ?? ""}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}

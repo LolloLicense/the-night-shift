@@ -1,4 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import NightBriefing from "./NightBriefing";
 import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
@@ -14,6 +15,7 @@ import GuestLog from "../components/GuestLog";
 import SettingsModal from "../components/SettingsModal";
 
 type FrontDeskProps = {
+  playerName: string;
   scenario: Scenario;
   rooms: Room[];
   startedAt: number;
@@ -28,6 +30,7 @@ type FrontDeskProps = {
 };
 
 function FrontDesk({
+  playerName,
   rooms,
   startedAt,
   scenario,
@@ -42,6 +45,7 @@ function FrontDesk({
 }: FrontDeskProps) {
   const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isBriefingOpen, setIsBriefingOpen] = useState(false);
   const currentGuest = scenario.guests[currentGuestIndex];
 
   return (
@@ -78,6 +82,7 @@ function FrontDesk({
           onCheckIn={onCheckIn}
           checkInResult={checkInResult}
           onOpenGuestLog={() => setIsGuestLogOpen((current) => !current)}
+          onOpenBriefing={() => setIsBriefingOpen(true)}
         />
         {isGuestLogOpen && (
           <GuestLog
@@ -91,6 +96,16 @@ function FrontDesk({
             onClose={() => setIsSettingsOpen(false)}
             onClockOut={onClockOut}
           />
+        )}
+        {isBriefingOpen && (
+          <div className="absolute inset-0 z-60">
+            <NightBriefing
+              briefing={scenario.briefing}
+              playerName={playerName}
+              onContinue={() => setIsBriefingOpen(false)}
+              buttonText="Back to desk"
+            />
+          </div>
         )}
         {checkInResult && selectedRoom && (
           <CheckInResultModal

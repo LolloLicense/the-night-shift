@@ -1,12 +1,15 @@
 type NightBriefingProps = {
   briefing: string;
   playerName: string;
-  onStartShift: () => void;
+  onContinue: () => void;
+  buttonText?: string;
 };
+
 function NightBriefing({
   briefing,
   playerName,
-  onStartShift,
+  onContinue,
+  buttonText = "Start shift",
 }: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
@@ -36,10 +39,10 @@ function NightBriefing({
 
         <button
           type="button"
-          onClick={onStartShift}
-          className="mt-8 cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans font-semibold text-xs tracking-widest text-cream uppercase"
+          onClick={onContinue}
+          className="mt-8 cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase"
         >
-          Start shift
+          {buttonText}
         </button>
       </div>
     </section>
