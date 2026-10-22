@@ -11,6 +11,7 @@ import type {
 } from "../types/game";
 import CheckInResultModal from "../components/CheckInResultModal";
 import GuestLog from "../components/GuestLog";
+import SettingsModal from "../components/SettingsModal";
 
 type FrontDeskProps = {
   scenario: Scenario;
@@ -36,6 +37,7 @@ function FrontDesk({
   onNextGuest,
 }: FrontDeskProps) {
   const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const currentGuest = scenario.guests[currentGuestIndex];
 
   return (
@@ -49,7 +51,7 @@ function FrontDesk({
         />
 
         {/* UI */}
-        <Header />
+        <Header onOpenSettings={() => setIsSettingsOpen(true)} />
 
         <div className="absolute top-2/5 xl:top-[33%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
@@ -77,7 +79,9 @@ function FrontDesk({
             guests={scenario.guests}
           />
         )}
-
+        {isSettingsOpen && (
+          <SettingsModal onClose={() => setIsSettingsOpen(false)} />
+        )}
         {checkInResult && selectedRoom && (
           <CheckInResultModal
             result={checkInResult}

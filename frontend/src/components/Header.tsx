@@ -1,12 +1,17 @@
 import ShiftStatus from "./ShiftStatus";
 
-function Header() {
+type HeaderProps = {
+  onOpenSettings: () => void;
+};
+
+function Header({ onOpenSettings }: HeaderProps) {
   return (
     <header className="absolute z-50 top-0 left-0 flex w-full items-start justify-between p-6">
       <ShiftStatus />
 
       <button
         type="button"
+        onClick={onOpenSettings}
         aria-label="Open settings"
         className="flex size-10 cursor-pointer items-center justify-center rounded-md bg-ruby"
       >
