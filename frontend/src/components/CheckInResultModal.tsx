@@ -6,6 +6,7 @@ type CheckInResultModalProps = {
   guest: Guest;
   room: Room;
   onNextGuest: () => void;
+  isLastGuest: boolean;
 };
 
 function CheckInResultModal({
@@ -13,6 +14,7 @@ function CheckInResultModal({
   guest,
   room,
   onNextGuest,
+  isLastGuest,
 }: CheckInResultModalProps) {
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-ink/90 backdrop-blur-sm">
@@ -30,8 +32,6 @@ function CheckInResultModal({
             <h2 className="font-display text-3xl font-bold leading-tight uppercase">
               {guest.name}
             </h2>
-
-            {/* Empty column balances the portrait */}
 
             <div aria-hidden="true" />
           </div>
@@ -121,7 +121,7 @@ function CheckInResultModal({
             onClick={onNextGuest}
             className="mx-auto mt-2 cursor-pointer h-14 rounded-md bg-ink/90 backdrop-blur-md px-4 font-semibold tracking-widest text-cream uppercase"
           >
-            Next guest
+            {isLastGuest ? "Complete shift" : "Next guest"}
           </button>
         </div>
       </div>

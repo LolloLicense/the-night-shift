@@ -1,17 +1,26 @@
 type RoomKeyProps = {
   roomNumber: number;
   isSelected: boolean;
+  isOccupied: boolean;
   onSelect: () => void;
 };
 
-function RoomKey({ roomNumber, isSelected, onSelect }: RoomKeyProps) {
+function RoomKey({
+  roomNumber,
+  isSelected,
+  isOccupied,
+  onSelect,
+}: RoomKeyProps) {
   return (
     <button
       onClick={onSelect}
-      className={`group relative cursor-pointer transition-transform duration-200 ease-out ${
-        isSelected
-          ? "-translate-y-2 scale-105"
-          : "hover:-translate-y-2 hover:scale-105"
+      disabled={isOccupied}
+      className={`group relative transition-transform duration-200 ease-out ${
+        isOccupied
+          ? "cursor-not-allowed opacity-40"
+          : isSelected
+            ? "-translate-y-2 scale-105 cursor-pointer"
+            : "cursor-pointer hover:-translate-y-2 hover:scale-105"
       }`}
     >
       <img

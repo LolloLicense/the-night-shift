@@ -70,6 +70,7 @@ function FrontDesk({
           <KeyBoard
             rooms={rooms}
             selectedRoom={selectedRoom}
+            assignments={assignments}
             setSelectedRoom={setSelectedRoom}
           />
 
@@ -130,6 +131,7 @@ function FrontDesk({
             guest={currentGuest}
             room={selectedRoom}
             onNextGuest={onNextGuest}
+            isLastGuest={currentGuestIndex === scenario.guests.length - 1}
           />
         )}
       </div>

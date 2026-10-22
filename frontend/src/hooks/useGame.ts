@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { evaluateRoom } from "../game/evaluateRoom";
+import { evaluateShift } from "../game/evaluateShift";
 import type {
   CheckInResult,
   Player,
@@ -53,6 +54,10 @@ export function useGame() {
   const [checkInResult, setCheckInResult] = useState<CheckInResult | null>(
     null,
   );
+
+  const [shiftResult, setShiftResult] = useState<ReturnType<
+    typeof evaluateShift
+  > | null>(null);
 
   useEffect(() => {
     if (!scenario) return;
@@ -131,6 +136,12 @@ export function useGame() {
   const checkInGuest = (guestId: string, roomNumber: number) => {
     if (!scenario) return;
 
+    const roomIsOccupied = assignments.some(
+      (assignment) => assignment.roomNumber === roomNumber,
+    );
+
+    if (roomIsOccupied) return;
+
     const guest = scenario.guests.find((guest) => guest._id === guestId);
     const room = rooms.find((room) => room.roomNumber === roomNumber);
 
@@ -164,13 +175,18 @@ export function useGame() {
     const isLastGuest = currentGuestIndex === scenario.guests.length - 1;
 
     if (isLastGuest) {
-      // Shift Complete bygger vi senare
-      return;
+      const result = evaluateShift(scenario.guests, rooms, assignments);
+
+      console.log("SHIFT COMPLETE:", result);
+      setShiftResult(result);
+      return true;
     }
 
     setCurrentGuestIndex((current) => current + 1);
     setSelectedRoom(null);
     setCheckInResult(null);
+
+    return false;
   };
 
   const clockOut = () => {
@@ -196,6 +212,7 @@ export function useGame() {
     assignments,
     currentGuestIndex,
     checkInResult,
+    shiftResult,
     startNight,
     checkInGuest,
     continueToNextGuest,
