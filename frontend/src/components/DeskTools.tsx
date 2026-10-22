@@ -9,6 +9,7 @@ type DeskToolsProps = {
   checkInResult: CheckInResult | null;
   onOpenGuestLog: () => void;
   onOpenBriefing: () => void;
+  playerEarnings: number;
 };
 
 function DeskTools({
@@ -18,6 +19,7 @@ function DeskTools({
   checkInResult,
   onOpenGuestLog,
   onOpenBriefing,
+  playerEarnings,
 }: DeskToolsProps) {
   return (
     <div className="absolute z-50 bottom-6 left-6 flex w-[calc(100%-3rem)] items-end justify-between">
@@ -62,7 +64,7 @@ function DeskTools({
       {/* Cash */}
       <div className="flex gap-2 h-14 items-center rounded-md border border-cream/50 bg-ink/90 backdrop-blur-md px-4 text-cream">
         <img src="/icons/money.svg" alt="" className="size-5" />
-        <span className="tracking-widest">240</span>
+        <span className="tracking-widest">{playerEarnings}</span>
       </div>
     </div>
   );

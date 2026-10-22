@@ -18,6 +18,7 @@ import SettingsModal from "../components/SettingsModal";
 type FrontDeskProps = {
   playerName: string;
   nightNumber: number;
+  playerEarnings: number;
   scenario: Scenario;
   rooms: Room[];
   startedAt: number;
@@ -34,6 +35,7 @@ type FrontDeskProps = {
 function FrontDesk({
   playerName,
   nightNumber,
+  playerEarnings,
   rooms,
   startedAt,
   scenario,
@@ -89,6 +91,7 @@ function FrontDesk({
           checkInResult={checkInResult}
           onOpenGuestLog={() => setIsGuestLogOpen((current) => !current)}
           onOpenBriefing={() => setIsBriefingOpen(true)}
+          playerEarnings={playerEarnings}
         />
         {/* GUEST LOG */}
         <AnimatePresence>

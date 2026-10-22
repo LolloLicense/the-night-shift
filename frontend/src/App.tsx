@@ -99,6 +99,7 @@ function App() {
                 startedAt={startedAt}
                 playerName={player?.name ?? ""}
                 nightNumber={(player?.completedNights ?? 0) + 1}
+                playerEarnings={player?.totalEarnings ?? 0}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}
