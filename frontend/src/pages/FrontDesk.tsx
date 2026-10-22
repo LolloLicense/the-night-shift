@@ -1,4 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import NightBriefing from "./NightBriefing";
 import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
@@ -58,12 +59,13 @@ function FrontDesk({
           className="block h-full w-full object-cover"
         />
 
-        {/* UI */}
+        {/* HUD */}
         <Header
           startedAt={startedAt}
           onOpenSettings={() => setIsSettingsOpen(true)}
         />
 
+        {/* FRONDESK ELEMENTS */}
         <div className="absolute top-1/3 left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
@@ -84,29 +86,44 @@ function FrontDesk({
           onOpenGuestLog={() => setIsGuestLogOpen((current) => !current)}
           onOpenBriefing={() => setIsBriefingOpen(true)}
         />
-        {isGuestLogOpen && (
-          <GuestLog
-            rooms={rooms}
-            assignments={assignments}
-            guests={scenario.guests}
-          />
-        )}
-        {isSettingsOpen && (
-          <SettingsModal
-            onClose={() => setIsSettingsOpen(false)}
-            onClockOut={onClockOut}
-          />
-        )}
-        {isBriefingOpen && (
-          <div className="absolute inset-0 z-60">
-            <NightBriefing
-              briefing={scenario.briefing}
-              playerName={playerName}
-              onContinue={() => setIsBriefingOpen(false)}
-              buttonText="Back to desk"
+        {/* GUEST LOG */}
+        <AnimatePresence>
+          {isGuestLogOpen && (
+            <GuestLog
+              rooms={rooms}
+              assignments={assignments}
+              guests={scenario.guests}
             />
-          </div>
-        )}
+          )}
+        </AnimatePresence>
+        {/* SETTINGS */}
+        <AnimatePresence>
+          {isSettingsOpen && (
+            <SettingsModal
+              onClose={() => setIsSettingsOpen(false)}
+              onClockOut={onClockOut}
+            />
+          )}
+        </AnimatePresence>
+        {/* BRIEFING */}
+        <AnimatePresence>
+          {isBriefingOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="absolute inset-0 z-60"
+            >
+              <NightBriefing
+                briefing={scenario.briefing}
+                playerName={playerName}
+                onContinue={() => setIsBriefingOpen(false)}
+                buttonText="Back to desk"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
         {checkInResult && selectedRoom && (
           <CheckInResultModal
             result={checkInResult}

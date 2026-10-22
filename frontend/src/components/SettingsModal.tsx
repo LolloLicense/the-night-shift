@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 
 type SettingsModalProps = {
   onClose: () => void;
@@ -9,8 +10,18 @@ function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
   const [showClockOutWarning, setShowClockOutWarning] = useState(false);
 
   return (
-    <div className="absolute inset-0 z-40 flex items-center justify-center bg-ink/80 backdrop-blur-sm">
-      <div className="w-[clamp(320px,30vw,440px)] rounded-lg border border-cream/40 bg-ink/95 p-8 text-cream">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="absolute inset-0 z-40 flex items-center justify-center bg-ink/80 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 12, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="w-[clamp(320px,30vw,440px)] rounded-lg border border-cream/40 bg-ink/95 p-8 text-cream"
+      >
         {showClockOutWarning ? (
           <>
             <h2 className="border-b border-ruby pb-4 text-center font-display text-3xl font-bold uppercase">
@@ -35,7 +46,6 @@ function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
                 >
                   Stay
                 </button>
-
                 <button
                   type="button"
                   onClick={onClockOut}
@@ -78,8 +88,8 @@ function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
             </div>
           </>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

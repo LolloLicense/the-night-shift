@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import type { Guest, Room, RoomAssignment } from "../types/game";
 
 type GuestLogProps = {
@@ -26,8 +27,20 @@ function GuestLog({ rooms, assignments, guests }: GuestLogProps) {
   };
 
   return (
-    <div className="absolute inset-0 z-30 flex items-center justify-center bg-ink/60 backdrop-blur-sm">
-      <div className="relative">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="absolute inset-0 z-30 flex items-center justify-center bg-ink/60 backdrop-blur-sm"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 12, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 12, scale: 0.98 }}
+        transition={{ duration: 0.2, ease: "easeOut" }}
+        className="relative"
+      >
         <img src="/images/guest-log.png" alt="" className="block w-full" />
 
         <div className="absolute inset-0 grid grid-cols-2 px-[10%] py-[7%] text-ink">
@@ -105,8 +118,8 @@ function GuestLog({ rooms, assignments, guests }: GuestLogProps) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
