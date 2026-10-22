@@ -23,6 +23,7 @@ type FrontDeskProps = {
   currentGuestIndex: number;
   checkInResult: CheckInResult | null;
   onNextGuest: () => void;
+  onClockOut: () => void;
 };
 
 function FrontDesk({
@@ -35,6 +36,7 @@ function FrontDesk({
   currentGuestIndex,
   checkInResult,
   onNextGuest,
+  onClockOut,
 }: FrontDeskProps) {
   const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -80,7 +82,10 @@ function FrontDesk({
           />
         )}
         {isSettingsOpen && (
-          <SettingsModal onClose={() => setIsSettingsOpen(false)} />
+          <SettingsModal
+            onClose={() => setIsSettingsOpen(false)}
+            onClockOut={onClockOut}
+          />
         )}
         {checkInResult && selectedRoom && (
           <CheckInResultModal

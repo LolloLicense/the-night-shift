@@ -1,11 +1,13 @@
 import { useState } from "react";
 import ClockInCard from "../components/ClockInCard";
+import type { Player } from "../types/game";
 
 type StartScreenProps = {
+  players: Player[];
   onStart: (name: string) => void;
 };
 
-function StartScreen({ onStart }: StartScreenProps) {
+function StartScreen({ players, onStart }: StartScreenProps) {
   const [showClockIn, setShowClockIn] = useState(false);
   return (
     <section className="relative min-h-screen bg-[url('/images/night-shift-start.webp')] bg-cover bg-center">
@@ -39,6 +41,7 @@ function StartScreen({ onStart }: StartScreenProps) {
       {showClockIn && (
         <div className="absolute inset-0 flex items-center justify-center bg-ink/70 backdrop-blur-sm">
           <ClockInCard
+            players={players}
             onClockIn={(name) => {
               onStart(name);
             }}

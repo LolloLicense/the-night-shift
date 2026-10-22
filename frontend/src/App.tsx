@@ -17,7 +17,8 @@ function App() {
 
   const {
     player,
-    createPlayer,
+    players,
+    clockInPlayer,
     scenario,
     rooms,
     selectedRoom,
@@ -28,16 +29,22 @@ function App() {
     startNight,
     checkInGuest,
     continueToNextGuest,
+    clockOut,
   } = useGame();
 
   const handleStartNight = async (name: string) => {
-    createPlayer(name);
+    clockInPlayer(name);
 
     const started = await startNight();
 
     if (started) {
       setGameScreen("briefing");
     }
+  };
+
+  const handleClockOut = () => {
+    clockOut();
+    setGameScreen("start");
   };
 
   return (
@@ -58,12 +65,13 @@ function App() {
             transition={{ duration: 0.9, ease: easeInOut }}
           >
             {gameScreen === "start" && (
-              <StartScreen onStart={handleStartNight} />
+              <StartScreen players={players} onStart={handleStartNight} />
             )}
 
             {gameScreen === "briefing" && scenario && (
               <NightBriefing
                 briefing={scenario.briefing}
+                playerName={player?.name ?? ""}
                 onStartShift={() => setGameScreen("front-desk")}
               />
             )}
@@ -79,6 +87,7 @@ function App() {
                 currentGuestIndex={currentGuestIndex}
                 checkInResult={checkInResult}
                 onNextGuest={continueToNextGuest}
+                onClockOut={handleClockOut}
               />
             )}
           </motion.main>

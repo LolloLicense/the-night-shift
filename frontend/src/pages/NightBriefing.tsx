@@ -1,13 +1,18 @@
 type NightBriefingProps = {
   briefing: string;
+  playerName: string;
   onStartShift: () => void;
 };
-function NightBriefing({ briefing, onStartShift }: NightBriefingProps) {
+function NightBriefing({
+  briefing,
+  playerName,
+  onStartShift,
+}: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
       <div className="absolute top-[30%] left-1/2 w-96 -translate-x-1/2 text-ink">
         <h1 className="font-display text-xl font-bold">
-          To whoever's on tonight,
+          To whoever's on tonight, as far as I know, it should be {playerName}.
         </h1>
 
         <div className="mt-5 space-y-4 font-sans text-sm leading-6">

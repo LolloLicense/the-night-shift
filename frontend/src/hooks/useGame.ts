@@ -9,19 +9,26 @@ import type {
   SavedGame,
 } from "../types/game";
 
+const getSavedGame = (): SavedGame | null => {
+  const saved = localStorage.getItem("night-shift-save");
+
+  if (!saved) return null;
+
+  return JSON.parse(saved) as SavedGame;
+};
+
 export function useGame() {
-  const savedGame = (() => {
-    const saved = localStorage.getItem("night-shift-save");
-    if (!saved) return null;
+  const [savedGame] = useState<SavedGame | null>(getSavedGame);
 
-    return JSON.parse(saved) as SavedGame;
-  })();
+  const [players, setPlayers] = useState<Player[]>(() => {
+    const savedPlayers = localStorage.getItem("night-shift-players");
 
-  const [player, setPlayer] = useState<Player | null>(() => {
-    const savedPlayer = localStorage.getItem("night-shift-player");
-    if (!savedPlayer) return null;
-    return JSON.parse(savedPlayer) as Player;
+    if (!savedPlayers) return [];
+
+    return JSON.parse(savedPlayers) as Player[];
   });
+
+  const [player, setPlayer] = useState<Player | null>(null);
 
   const [scenario, setScenario] = useState<Scenario | null>(
     savedGame?.scenario ?? null,
@@ -52,15 +59,31 @@ export function useGame() {
     localStorage.setItem("night-shift-save", JSON.stringify(gameToSave));
   }, [scenario, rooms, assignments, currentGuestIndex]);
 
-  const createPlayer = (name: string) => {
+  const clockInPlayer = (name: string) => {
+    const trimmedName = name.trim();
+
+    const existingPlayer = players.find(
+      (player) => player.name.toLowerCase() === trimmedName.toLowerCase(),
+    );
+
+    if (existingPlayer) {
+      setPlayer(existingPlayer);
+      return;
+    }
+
     const newPlayer: Player = {
-      name,
+      name: trimmedName,
       completedNights: 0,
       totalEarnings: 0,
       highScore: 0,
     };
+
+    const updatedPlayers = [...players, newPlayer];
+
+    setPlayers(updatedPlayers);
     setPlayer(newPlayer);
-    localStorage.setItem("night-shift-player", JSON.stringify(newPlayer));
+
+    localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
   };
 
   const startNight = async () => {
@@ -138,9 +161,21 @@ export function useGame() {
     setCheckInResult(null);
   };
 
+  const clockOut = () => {
+    localStorage.removeItem("night-shift-save");
+
+    setScenario(null);
+    setRooms([]);
+    setAssignments([]);
+    setCurrentGuestIndex(0);
+    setSelectedRoom(null);
+    setCheckInResult(null);
+  };
+
   return {
     player,
-    createPlayer,
+    players,
+    clockInPlayer,
     scenario,
     rooms,
     selectedRoom,
@@ -151,5 +186,6 @@ export function useGame() {
     startNight,
     checkInGuest,
     continueToNextGuest,
+    clockOut,
   };
 }

@@ -1,12 +1,13 @@
 type SettingsModalProps = {
   onClose: () => void;
+  onClockOut: () => void;
 };
 
-function SettingsModal({ onClose }: SettingsModalProps) {
+function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
   return (
     <div className="absolute inset-0 z-40 flex items-center justify-center bg-ink/80 backdrop-blur-sm">
       <div className="w-[clamp(320px,30vw,440px)] rounded-lg border border-cream/40 bg-ink/95 p-8 text-cream">
-        <h2 className="border-b border-cream/30 pb-4 text-center font-display text-3xl font-bold uppercase">
+        <h2 className="border-b border-ruby pb-4 text-center font-display text-3xl font-bold uppercase">
           Settings
         </h2>
 
@@ -20,6 +21,7 @@ function SettingsModal({ onClose }: SettingsModalProps) {
 
           <button
             type="button"
+            onClick={onClockOut}
             className="cursor-pointer rounded-lg bg-ruby px-8 py-3 text-sm font-semibold tracking-widest uppercase"
           >
             Clock out
