@@ -60,14 +60,14 @@ function FrontDesk({
           onOpenSettings={() => setIsSettingsOpen(true)}
         />
 
-        <div className="absolute top-2/5 xl:top-[33%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
+        <div className="absolute top-1/3 left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
             selectedRoom={selectedRoom}
             setSelectedRoom={setSelectedRoom}
           />
 
-          <div className="w-[clamp(270px,22vw,460px)]">
+          <div className="w-82">
             <GuestCard guest={currentGuest} />
           </div>
         </div>
