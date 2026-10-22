@@ -99,7 +99,7 @@ export function useGame() {
       name: trimmedName,
       completedNights: 0,
       totalEarnings: 0,
-      highScore: 0,
+      playedScenarioIds: [],
     };
 
     const updatedPlayers = [...players, newPlayer];
@@ -206,6 +206,9 @@ export function useGame() {
       ...player,
       completedNights: player.completedNights + 1,
       totalEarnings: player.totalEarnings + shiftResult.totalTips,
+      playedScenarioIds: scenario
+        ? [...player.playedScenarioIds, scenario._id]
+        : player.playedScenarioIds,
     };
 
     const updatedPlayers = players.map((savedPlayer) =>

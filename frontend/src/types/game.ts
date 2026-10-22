@@ -2,7 +2,7 @@ export type Player = {
   name: string;
   completedNights: number;
   totalEarnings: number;
-  highScore: number;
+  playedScenarioIds: string[];
 };
 
 export type Guest = {
