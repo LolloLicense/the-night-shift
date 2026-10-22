@@ -1,7 +1,12 @@
+import { useState } from "react";
+import ClockInCard from "../components/ClockInCard";
+
 type StartScreenProps = {
-  onStart: () => void;
+  onStart: (name: string) => void;
 };
+
 function StartScreen({ onStart }: StartScreenProps) {
+  const [showClockIn, setShowClockIn] = useState(false);
   return (
     <section className="relative min-h-screen bg-[url('/images/night-shift-start.webp')] bg-cover bg-center">
       <div className="absolute top-1/5 left-1/5 flex flex-col items-start">
@@ -17,7 +22,7 @@ function StartScreen({ onStart }: StartScreenProps) {
             </p>
             <button
               type="button"
-              onClick={onStart}
+              onClick={() => setShowClockIn(true)}
               className="cursor-pointer rounded-lg uppercase font-semibold bg-ruby px-8 py-3 text-sm tracking-widest text-cream"
             >
               Start night
@@ -31,6 +36,15 @@ function StartScreen({ onStart }: StartScreenProps) {
           </div>
         </div>
       </div>
+      {showClockIn && (
+        <div className="absolute inset-0 flex items-center justify-center bg-ink/70 backdrop-blur-sm">
+          <ClockInCard
+            onClockIn={(name) => {
+              onStart(name);
+            }}
+          />
+        </div>
+      )}
     </section>
   );
 }

@@ -10,9 +10,14 @@ import { useGame } from "./hooks/useGame";
 type GameScreen = "start" | "briefing" | "front-desk";
 
 function App() {
-  const [gameScreen, setGameScreen] = useState<GameScreen>("start");
+  const [gameScreen, setGameScreen] = useState<GameScreen>(() => {
+    const savedGame = localStorage.getItem("night-shift-save");
+    return savedGame ? "front-desk" : "start";
+  });
 
   const {
+    player,
+    createPlayer,
     scenario,
     rooms,
     selectedRoom,
@@ -25,7 +30,9 @@ function App() {
     continueToNextGuest,
   } = useGame();
 
-  const handleStartNight = async () => {
+  const handleStartNight = async (name: string) => {
+    createPlayer(name);
+
     const started = await startNight();
 
     if (started) {

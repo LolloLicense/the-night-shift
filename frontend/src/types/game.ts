@@ -1,3 +1,10 @@
+export type Player = {
+  name: string;
+  completedNights: number;
+  totalEarnings: number;
+  highScore: number;
+};
+
 export type Guest = {
   _id: string;
   name: string;
@@ -44,4 +51,11 @@ export type CheckInResult = {
   preferencesMissed: string[];
   rate: number;
   tip: number;
+};
+
+export type SavedGame = {
+  scenario: Scenario;
+  rooms: Room[];
+  assignments: RoomAssignment[];
+  currentGuestIndex: number;
 };

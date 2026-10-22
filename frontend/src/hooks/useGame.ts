@@ -1,21 +1,67 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { evaluateRoom } from "../game/evaluateRoom";
 import type {
   CheckInResult,
+  Player,
   Room,
   RoomAssignment,
   Scenario,
+  SavedGame,
 } from "../types/game";
 
 export function useGame() {
-  const [scenario, setScenario] = useState<Scenario | null>(null);
-  const [rooms, setRooms] = useState<Room[]>([]);
+  const savedGame = (() => {
+    const saved = localStorage.getItem("night-shift-save");
+    if (!saved) return null;
+
+    return JSON.parse(saved) as SavedGame;
+  })();
+
+  const [player, setPlayer] = useState<Player | null>(() => {
+    const savedPlayer = localStorage.getItem("night-shift-player");
+    if (!savedPlayer) return null;
+    return JSON.parse(savedPlayer) as Player;
+  });
+
+  const [scenario, setScenario] = useState<Scenario | null>(
+    savedGame?.scenario ?? null,
+  );
+  const [rooms, setRooms] = useState<Room[]>(savedGame?.rooms ?? []);
+  const [assignments, setAssignments] = useState<RoomAssignment[]>(
+    savedGame?.assignments ?? [],
+  );
+  const [currentGuestIndex, setCurrentGuestIndex] = useState(
+    savedGame?.currentGuestIndex ?? 0,
+  );
+
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
-  const [assignments, setAssignments] = useState<RoomAssignment[]>([]);
-  const [currentGuestIndex, setCurrentGuestIndex] = useState(0);
   const [checkInResult, setCheckInResult] = useState<CheckInResult | null>(
     null,
   );
+
+  useEffect(() => {
+    if (!scenario) return;
+
+    const gameToSave: SavedGame = {
+      scenario,
+      rooms,
+      assignments,
+      currentGuestIndex,
+    };
+
+    localStorage.setItem("night-shift-save", JSON.stringify(gameToSave));
+  }, [scenario, rooms, assignments, currentGuestIndex]);
+
+  const createPlayer = (name: string) => {
+    const newPlayer: Player = {
+      name,
+      completedNights: 0,
+      totalEarnings: 0,
+      highScore: 0,
+    };
+    setPlayer(newPlayer);
+    localStorage.setItem("night-shift-player", JSON.stringify(newPlayer));
+  };
 
   const startNight = async () => {
     try {
@@ -93,6 +139,8 @@ export function useGame() {
   };
 
   return {
+    player,
+    createPlayer,
     scenario,
     rooms,
     selectedRoom,
