@@ -75,7 +75,7 @@ function FrontDesk({
         />
 
         {/* FRONT DESK ELEMENTS */}
-        <div className="absolute top-[32%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
+        <div className="absolute top-[35%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
             selectedRoom={selectedRoom}
