@@ -2,6 +2,7 @@ export type Player = {
   name: string;
   completedNights: number;
   totalEarnings: number;
+  totalUnhappyGuests: number;
   playedScenarioIds: string[];
 };
 

@@ -99,6 +99,7 @@ export function useGame() {
       name: trimmedName,
       completedNights: 0,
       totalEarnings: 0,
+      totalUnhappyGuests: 0,
       playedScenarioIds: [],
     };
 
@@ -110,9 +111,14 @@ export function useGame() {
     localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
   };
 
-  const startNight = async () => {
+  const startNight = async (playerToUse?: Player) => {
+    const activePlayer = playerToUse ?? player;
+
+    if (activePlayer && activePlayer.playedScenarioIds.length >= 20) {
+      return false;
+    }
     try {
-      const excludedIds = player?.playedScenarioIds ?? [];
+      const excludedIds = activePlayer?.playedScenarioIds ?? [];
 
       const scenarioUrl =
         excludedIds.length > 0
@@ -211,12 +217,25 @@ export function useGame() {
 
     const updatedPlayer: Player = {
       ...player,
+
       completedNights: player.completedNights + 1,
+
       totalEarnings: player.totalEarnings + shiftResult.totalTips,
+
+      totalUnhappyGuests: player.totalUnhappyGuests + shiftResult.unhappyGuests,
+
       playedScenarioIds: scenario
         ? [...player.playedScenarioIds, scenario._id]
         : player.playedScenarioIds,
     };
+
+    const isFired =
+      (updatedPlayer.completedNights === 5 &&
+        updatedPlayer.totalUnhappyGuests >= 15) ||
+      (updatedPlayer.completedNights === 10 &&
+        updatedPlayer.totalUnhappyGuests >= 27) ||
+      (updatedPlayer.completedNights === 15 &&
+        updatedPlayer.totalUnhappyGuests >= 40);
 
     const updatedPlayers = players.map((savedPlayer) =>
       savedPlayer.name.toLowerCase() === player.name.toLowerCase()
@@ -230,6 +249,58 @@ export function useGame() {
     localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
 
     localStorage.removeItem("night-shift-save");
+
+    if (isFired) {
+      return {
+        status: "fired",
+        player: updatedPlayer,
+      };
+    }
+
+    if (updatedPlayer.playedScenarioIds.length >= 20) {
+      return {
+        status: "game-complete",
+        player: updatedPlayer,
+      };
+    }
+
+    return {
+      status: "continue",
+      player: updatedPlayer,
+    };
+  };
+
+  const resetPlayer = () => {
+    if (!player) return;
+
+    const resetPlayer: Player = {
+      ...player,
+      completedNights: 0,
+      totalEarnings: 0,
+      totalUnhappyGuests: 0,
+      playedScenarioIds: [],
+    };
+
+    const updatedPlayers = players.map((savedPlayer) =>
+      savedPlayer.name.toLowerCase() === player.name.toLowerCase()
+        ? resetPlayer
+        : savedPlayer,
+    );
+
+    setPlayer(resetPlayer);
+    setPlayers(updatedPlayers);
+
+    localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
+
+    localStorage.removeItem("night-shift-save");
+
+    setScenario(null);
+    setRooms([]);
+    setAssignments([]);
+    setCurrentGuestIndex(0);
+    setSelectedRoom(null);
+    setCheckInResult(null);
+    setShiftResult(null);
   };
 
   const clockOut = () => {
@@ -260,6 +331,7 @@ export function useGame() {
     checkInGuest,
     continueToNextGuest,
     completeShift,
+    resetPlayer,
     clockOut,
   };
 }

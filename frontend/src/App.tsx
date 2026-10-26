@@ -6,12 +6,21 @@ import NightBriefing from "./pages/NightBriefing";
 import StartScreen from "./pages/StartScreen";
 import { useGame } from "./hooks/useGame";
 import ShiftReport from "./pages/ShiftReport";
+import Fired from "./pages/Fired";
+import GameComplete from "./pages/GameComplete";
 
-type GameScreen = "start" | "briefing" | "front-desk" | "shift-report";
+type GameScreen =
+  | "start"
+  | "briefing"
+  | "front-desk"
+  | "shift-report"
+  | "fired"
+  | "game-complete";
 
 function App() {
   const [gameScreen, setGameScreen] = useState<GameScreen>(() => {
     const savedGame = localStorage.getItem("night-shift-save");
+
     return savedGame ? "front-desk" : "start";
   });
 
@@ -33,6 +42,7 @@ function App() {
     continueToNextGuest,
     completeShift,
     clockOut,
+    resetPlayer,
   } = useGame();
 
   const handleStartNight = async (name: string) => {
@@ -50,8 +60,30 @@ function App() {
     setGameScreen("start");
   };
 
-  const handleCompleteShift = () => {
-    completeShift();
+  const handleCompleteShift = async () => {
+    const result = completeShift();
+
+    if (!result) return;
+
+    if (result.status === "fired") {
+      setGameScreen("fired");
+      return;
+    }
+
+    if (result.status === "game-complete") {
+      setGameScreen("game-complete");
+      return;
+    }
+
+    const started = await startNight(result.player);
+
+    if (started) {
+      setGameScreen("briefing");
+    }
+  };
+
+  const handleStartOver = () => {
+    resetPlayer();
     setGameScreen("start");
   };
 
@@ -80,10 +112,12 @@ function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.9, ease: easeInOut }}
           >
+            {/* START */}
             {gameScreen === "start" && (
               <StartScreen players={players} onStart={handleStartNight} />
             )}
 
+            {/* NIGHT BRIEFING */}
             {gameScreen === "briefing" && scenario && (
               <NightBriefing
                 briefing={scenario.briefing}
@@ -92,6 +126,7 @@ function App() {
               />
             )}
 
+            {/* FRONT DESK */}
             {gameScreen === "front-desk" && scenario && (
               <FrontDesk
                 scenario={scenario}
@@ -110,6 +145,7 @@ function App() {
                 onClockOut={handleClockOut}
               />
             )}
+
             {/* SHIFT REPORT */}
             {gameScreen === "shift-report" && shiftResult && (
               <ShiftReport
@@ -120,6 +156,24 @@ function App() {
                 unhappyGuests={shiftResult.unhappyGuests}
                 totalGuests={shiftResult.results.length}
                 onClockOut={handleCompleteShift}
+              />
+            )}
+
+            {/* FIRED */}
+            {gameScreen === "fired" && player && (
+              <Fired
+                unhappyGuests={player.totalUnhappyGuests}
+                nightsWorked={player.completedNights}
+                onStartOver={handleStartOver}
+              />
+            )}
+
+            {/* GAME COMPLETE */}
+            {gameScreen === "game-complete" && player && (
+              <GameComplete
+                nightsWorked={player.completedNights}
+                totalEarnings={player.totalEarnings}
+                onClockOut={handleClockOut}
               />
             )}
           </motion.main>

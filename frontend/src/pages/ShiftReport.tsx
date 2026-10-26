@@ -76,7 +76,7 @@ function ShiftReport({
           onClick={onClockOut}
           className="mx-auto mt-4 block cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase"
         >
-          Clock out
+          Next shift
         </button>
       </div>
     </section>
