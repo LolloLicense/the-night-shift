@@ -9,6 +9,7 @@ import type {
   Scenario,
   SavedGame,
 } from "../types/game";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const getSavedGame = (): SavedGame | null => {
   const saved = localStorage.getItem("night-shift-save");
@@ -132,12 +133,12 @@ export function useGame() {
 
       const scenarioUrl =
         excludedIds.length > 0
-          ? `http://localhost:3000/api/scenarios/random/easy?exclude=${excludedIds.join(",")}`
-          : "http://localhost:3000/api/scenarios/random/easy";
+          ? `${API_URL}/api/scenarios/random/easy?exclude=${excludedIds.join(",")}`
+          : `${API_URL}/api/scenarios/random/easy`;
 
       const [scenarioResponse, roomsResponse] = await Promise.all([
         fetch(scenarioUrl),
-        fetch("http://localhost:3000/api/rooms"),
+        fetch(`${API_URL}/api/rooms`),
       ]);
 
       if (!scenarioResponse.ok || !roomsResponse.ok) {
