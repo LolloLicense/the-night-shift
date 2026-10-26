@@ -7,14 +7,15 @@ import roomRoutes from "./routes/rooms.js";
 import scenarioRoutes from "./routes/scenarios.js";
 
 const app = express();
-//middleware
+
+// Middleware
 app.use(express.json());
 app.use(cors());
-app.use(express.json());
 
 app.use("/api/guests", guestRoutes);
 app.use("/api/rooms", roomRoutes);
 app.use("/api/scenarios", scenarioRoutes);
+
 const PORT = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
@@ -26,3 +27,5 @@ await connectDB();
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+export default app;
