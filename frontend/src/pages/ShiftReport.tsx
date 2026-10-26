@@ -19,7 +19,7 @@ function ShiftReport({
 }: ShiftReportProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[18%] left-1/2 w-96 -translate-x-1/2 text-ink">
+      <div className="absolute top-[18%] left-1/2 w-96 -translate-x-1/2 text-ink -rotate-1">
         <h1 className="border-b-2 border-ruby pb-2 text-center font-display text-2xl font-bold uppercase">
           Shift Complete
         </h1>

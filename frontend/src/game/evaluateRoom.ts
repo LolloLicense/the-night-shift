@@ -24,13 +24,13 @@ function requestIsMet(
       return room.roomNumber >= 200 && room.roomNumber < 300;
 
     case "near-lobby":
-      return room.location === "near-lobby";
+      return room.location === "near-lobby" || room.location === "mid";
 
     case "near-elevator":
-      return room.location === "near-elevator";
+      return room.location === "near-elevator" || room.location === "mid";
 
     case "away-from-elevator":
-      return room.location === "away";
+      return room.location === "away" || room.location === "mid";
 
     case "no-smoking-neighbours":
       return !hasSmokingNeighbour;

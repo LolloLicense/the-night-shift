@@ -1,6 +1,9 @@
 import { evaluateRoom } from "./evaluateRoom";
 import type { Guest, Room, RoomAssignment } from "../types/game";
 
+// Requirements that always make a guest unhappy if missed
+const CRITICAL_REQUIREMENTS = ["smoking", "pet-friendly"];
+
 export function evaluateShift(
   guests: Guest[],
   rooms: Room[],
@@ -36,11 +39,27 @@ export function evaluateShift(
 
   const totalTips = results.reduce((total, result) => total + result.tip, 0);
 
-  const happyGuests = results.filter(
-    (result) => result.requirementsMissed.length === 0 && !result.downgrade,
-  ).length;
+  const unhappyGuests = results.filter((result) => {
+    // A downgrade always makes the guest unhappy
+    if (result.downgrade) {
+      return true;
+    }
 
-  const unhappyGuests = results.length - happyGuests;
+    // Missing a critical requirement always makes the guest unhappy
+    const missedCriticalRequirement = result.requirementsMissed.some(
+      (requirement) => CRITICAL_REQUIREMENTS.includes(requirement),
+    );
+
+    if (missedCriticalRequirement) {
+      return true;
+    }
+
+    // One missed regular requirement is tolerated.
+    // Two or more makes the guest unhappy.
+    return result.requirementsMissed.length >= 2;
+  }).length;
+
+  const happyGuests = results.length - unhappyGuests;
 
   return {
     results,

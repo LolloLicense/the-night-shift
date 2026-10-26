@@ -1,12 +1,13 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import NightBriefing from "./NightBriefing";
+import KeyBoard from "../components/KeyBoard";
 import DeskTools from "../components/DeskTools";
 import GuestCard from "../components/GuestCard";
 import Header from "../components/Header";
-import KeyBoard from "../components/KeyBoard";
 import type {
   CheckInResult,
+  Player,
   Room,
   Scenario,
   RoomAssignment,
@@ -14,11 +15,11 @@ import type {
 import CheckInResultModal from "../components/CheckInResultModal";
 import GuestLog from "../components/GuestLog";
 import SettingsModal from "../components/SettingsModal";
+import EmployeeFile from "../components/EmployeeFile";
 
 type FrontDeskProps = {
-  playerName: string;
+  player: Player;
   nightNumber: number;
-  playerEarnings: number;
   scenario: Scenario;
   rooms: Room[];
   startedAt: number;
@@ -33,9 +34,8 @@ type FrontDeskProps = {
 };
 
 function FrontDesk({
-  playerName,
+  player,
   nightNumber,
-  playerEarnings,
   rooms,
   startedAt,
   scenario,
@@ -51,6 +51,8 @@ function FrontDesk({
   const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isBriefingOpen, setIsBriefingOpen] = useState(false);
+  const [isEmployeeFileOpen, setIsEmployeeFileOpen] = useState(false);
+
   const currentGuest = scenario.guests[currentGuestIndex];
 
   return (
@@ -70,7 +72,7 @@ function FrontDesk({
           nightNumber={nightNumber}
         />
 
-        {/* FRONDESK ELEMENTS */}
+        {/* FRONT DESK ELEMENTS */}
         <div className="absolute top-[32%] left-1/2 flex w-full -translate-x-1/2 items-center justify-center gap-[3vw]">
           <KeyBoard
             rooms={rooms}
@@ -84,6 +86,7 @@ function FrontDesk({
           </div>
         </div>
 
+        {/* DESK TOOLS */}
         <DeskTools
           selectedRoom={selectedRoom}
           currentGuest={currentGuest}
@@ -91,8 +94,12 @@ function FrontDesk({
           checkInResult={checkInResult}
           onOpenGuestLog={() => setIsGuestLogOpen((current) => !current)}
           onOpenBriefing={() => setIsBriefingOpen(true)}
-          playerEarnings={playerEarnings}
+          onOpenEmployeeFile={() =>
+            setIsEmployeeFileOpen((current) => !current)
+          }
+          playerEarnings={player.totalEarnings}
         />
+
         {/* GUEST LOG */}
         <AnimatePresence>
           {isGuestLogOpen && (
@@ -103,6 +110,12 @@ function FrontDesk({
             />
           )}
         </AnimatePresence>
+
+        {/* EMPLOYEE FILE */}
+        <AnimatePresence>
+          {isEmployeeFileOpen && <EmployeeFile player={player} />}
+        </AnimatePresence>
+
         {/* SETTINGS */}
         <AnimatePresence>
           {isSettingsOpen && (
@@ -112,6 +125,7 @@ function FrontDesk({
             />
           )}
         </AnimatePresence>
+
         {/* BRIEFING */}
         <AnimatePresence>
           {isBriefingOpen && (
@@ -124,13 +138,15 @@ function FrontDesk({
             >
               <NightBriefing
                 briefing={scenario.briefing}
-                playerName={playerName}
+                playerName={player.name}
                 onContinue={() => setIsBriefingOpen(false)}
                 buttonText="Back to desk"
               />
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* CHECK IN RESULT */}
         {checkInResult && selectedRoom && (
           <CheckInResultModal
             result={checkInResult}

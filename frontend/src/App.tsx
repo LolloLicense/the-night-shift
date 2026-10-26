@@ -46,9 +46,9 @@ function App() {
   } = useGame();
 
   const handleStartNight = async (name: string) => {
-    clockInPlayer(name);
+    const activePlayer = clockInPlayer(name);
 
-    const started = await startNight();
+    const started = await startNight(activePlayer);
 
     if (started) {
       setGameScreen("briefing");
@@ -127,14 +127,13 @@ function App() {
             )}
 
             {/* FRONT DESK */}
-            {gameScreen === "front-desk" && scenario && (
+            {gameScreen === "front-desk" && scenario && player && (
               <FrontDesk
+                player={player}
                 scenario={scenario}
                 rooms={rooms}
                 startedAt={startedAt}
-                playerName={player?.name ?? ""}
-                nightNumber={(player?.completedNights ?? 0) + 1}
-                playerEarnings={player?.totalEarnings ?? 0}
+                nightNumber={player.completedNights + 1}
                 selectedRoom={selectedRoom}
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}

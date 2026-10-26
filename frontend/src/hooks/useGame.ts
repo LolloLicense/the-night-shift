@@ -81,7 +81,7 @@ export function useGame() {
     };
 
     localStorage.setItem("night-shift-save", JSON.stringify(gameToSave));
-  }, [scenario, rooms, assignments, currentGuestIndex, startedAt]);
+  }, [scenario, rooms, assignments, currentGuestIndex, startedAt, player]);
 
   const clockInPlayer = (name: string) => {
     const trimmedName = name.trim();
@@ -91,14 +91,21 @@ export function useGame() {
     );
 
     if (existingPlayer) {
-      setPlayer(existingPlayer);
-      return;
+      const normalizedPlayer: Player = {
+        ...existingPlayer,
+        totalHappyGuests: existingPlayer.totalHappyGuests ?? 0,
+      };
+
+      setPlayer(normalizedPlayer);
+
+      return normalizedPlayer;
     }
 
     const newPlayer: Player = {
       name: trimmedName,
       completedNights: 0,
       totalEarnings: 0,
+      totalHappyGuests: 0,
       totalUnhappyGuests: 0,
       playedScenarioIds: [],
     };
@@ -109,6 +116,8 @@ export function useGame() {
     setPlayer(newPlayer);
 
     localStorage.setItem("night-shift-players", JSON.stringify(updatedPlayers));
+
+    return newPlayer;
   };
 
   const startNight = async (playerToUse?: Player) => {
@@ -117,6 +126,7 @@ export function useGame() {
     if (activePlayer && activePlayer.playedScenarioIds.length >= 20) {
       return false;
     }
+
     try {
       const excludedIds = activePlayer?.playedScenarioIds ?? [];
 
@@ -140,7 +150,7 @@ export function useGame() {
       setScenario(scenarioData);
       setRooms(roomsData);
 
-      // Start a new shift at 12:00 AM
+      // Start a new shift
       setStartedAt(Date.now());
 
       // Reset game state when a new night starts
@@ -148,6 +158,7 @@ export function useGame() {
       setAssignments([]);
       setCurrentGuestIndex(0);
       setCheckInResult(null);
+      setShiftResult(null);
 
       return true;
     } catch (error) {
@@ -201,7 +212,9 @@ export function useGame() {
       const result = evaluateShift(scenario.guests, rooms, assignments);
 
       console.log("SHIFT COMPLETE:", result);
+
       setShiftResult(result);
+
       return true;
     }
 
@@ -221,6 +234,9 @@ export function useGame() {
       completedNights: player.completedNights + 1,
 
       totalEarnings: player.totalEarnings + shiftResult.totalTips,
+
+      totalHappyGuests:
+        (player.totalHappyGuests ?? 0) + shiftResult.happyGuests,
 
       totalUnhappyGuests: player.totalUnhappyGuests + shiftResult.unhappyGuests,
 
@@ -277,6 +293,7 @@ export function useGame() {
       ...player,
       completedNights: 0,
       totalEarnings: 0,
+      totalHappyGuests: 0,
       totalUnhappyGuests: 0,
       playedScenarioIds: [],
     };
@@ -312,6 +329,7 @@ export function useGame() {
     setCurrentGuestIndex(0);
     setSelectedRoom(null);
     setCheckInResult(null);
+    setShiftResult(null);
   };
 
   return {

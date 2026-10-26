@@ -3,6 +3,7 @@ export type Player = {
   completedNights: number;
   totalEarnings: number;
   totalUnhappyGuests: number;
+  totalHappyGuests: number;
   playedScenarioIds: string[];
 };
 
