@@ -8,6 +8,7 @@ import { useGame } from "./hooks/useGame";
 import ShiftReport from "./pages/ShiftReport";
 import Fired from "./pages/Fired";
 import GameComplete from "./pages/GameComplete";
+import HowToPlay from "./pages/HowToPlay";
 
 type GameScreen =
   | "start"
@@ -23,6 +24,8 @@ function App() {
 
     return savedGame ? "front-desk" : "start";
   });
+
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
 
   const {
     player,
@@ -82,6 +85,11 @@ function App() {
     }
   };
 
+  const handleGameCompleteClockOut = () => {
+    resetPlayer();
+    setGameScreen("start");
+  };
+
   const handleStartOver = () => {
     resetPlayer();
     setGameScreen("start");
@@ -114,7 +122,11 @@ function App() {
           >
             {/* START */}
             {gameScreen === "start" && (
-              <StartScreen players={players} onStart={handleStartNight} />
+              <StartScreen
+                players={players}
+                onStart={handleStartNight}
+                onOpenHowToPlay={() => setIsHowToPlayOpen(true)}
+              />
             )}
 
             {/* NIGHT BRIEFING */}
@@ -138,6 +150,7 @@ function App() {
                 setSelectedRoom={setSelectedRoom}
                 assignments={assignments}
                 onCheckIn={checkInGuest}
+                onOpenHowToPlay={() => setIsHowToPlayOpen(true)}
                 currentGuestIndex={currentGuestIndex}
                 checkInResult={checkInResult}
                 onNextGuest={handleNextGuest}
@@ -146,7 +159,7 @@ function App() {
             )}
 
             {/* SHIFT REPORT */}
-            {gameScreen === "shift-report" && shiftResult && (
+            {gameScreen === "shift-report" && shiftResult && player && (
               <ShiftReport
                 totalRevenue={shiftResult.totalRevenue}
                 totalTips={shiftResult.totalTips}
@@ -154,7 +167,8 @@ function App() {
                 happyGuests={shiftResult.happyGuests}
                 unhappyGuests={shiftResult.unhappyGuests}
                 totalGuests={shiftResult.results.length}
-                onClockOut={handleCompleteShift}
+                nightNumber={player.completedNights + 1}
+                onNextShift={handleCompleteShift}
               />
             )}
 
@@ -172,10 +186,15 @@ function App() {
               <GameComplete
                 nightsWorked={player.completedNights}
                 totalEarnings={player.totalEarnings}
-                onClockOut={handleClockOut}
+                onClockOut={handleGameCompleteClockOut}
               />
             )}
           </motion.main>
+        </AnimatePresence>
+        <AnimatePresence>
+          {isHowToPlayOpen && (
+            <HowToPlay onClose={() => setIsHowToPlayOpen(false)} />
+          )}
         </AnimatePresence>
       </div>
     </>

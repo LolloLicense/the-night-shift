@@ -13,7 +13,7 @@ function NightBriefing({
 }: NightBriefingProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[20%] left-1/2 w-96 -translate-x-1/2 text-ink -rotate-1">
+      <div className="absolute top-[30%] left-1/2 w-96 -translate-x-1/2 text-ink -rotate-1">
         <h1 className="font-display text-xl font-bold">
           To whoever's on tonight, as far as I know, it should be {playerName}.
         </h1>

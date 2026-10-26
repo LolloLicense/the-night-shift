@@ -17,9 +17,9 @@ function GameComplete({
         className="absolute inset-0 h-full w-full object-cover"
       />
 
-      <section className="relative z-10 w-[min(90vw,580px)] px-14 py-12 text-ink">
+      <section className="relative z-10 w-[min(90vw,600px)] px-14 py-12 text-ink -rotate-1">
         {/* Management header */}
-        <div className="border-b border-ink/25 pb-5 text-center">
+        <div className="border-b border-ink/25 pb-3 text-center">
           <p className="font-sans text-[10px] font-semibold tracking-[0.35em] uppercase">
             The Night Shift Hotel
           </p>
@@ -50,7 +50,7 @@ function GameComplete({
         </div>
 
         {/* Stats */}
-        <div className="mx-auto mt-4 grid max-w-sm grid-cols-2 border-y border-ink/20 py-5">
+        <div className="mx-auto mt-4 grid max-w-sm grid-cols-2 border-y border-ink/20 py-3">
           <div className="border-r border-ink/20 text-center">
             <p className="font-display text-3xl font-bold">{nightsWorked}</p>
 
@@ -69,7 +69,7 @@ function GameComplete({
         </div>
 
         {/* Final message */}
-        <div className="mt-6 text-center">
+        <div className="mt-4 text-center">
           <p className="mt-1 font-sans text-sm leading-6 tracking-widest">
             For now, you've worked every shift we've got.
             <br />
@@ -83,7 +83,7 @@ function GameComplete({
         <button
           type="button"
           onClick={onClockOut}
-          className="mx-auto mt-6 block cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase transition-transform hover:scale-105"
+          className="mx-auto mt-4 block cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase transition-transform hover:scale-105"
         >
           Clock out
         </button>

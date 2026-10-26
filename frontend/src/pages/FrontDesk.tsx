@@ -31,6 +31,7 @@ type FrontDeskProps = {
   checkInResult: CheckInResult | null;
   onNextGuest: () => void;
   onClockOut: () => void;
+  onOpenHowToPlay: () => void;
 };
 
 function FrontDesk({
@@ -47,6 +48,7 @@ function FrontDesk({
   checkInResult,
   onNextGuest,
   onClockOut,
+  onOpenHowToPlay,
 }: FrontDeskProps) {
   const [isGuestLogOpen, setIsGuestLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -122,6 +124,11 @@ function FrontDesk({
             <SettingsModal
               onClose={() => setIsSettingsOpen(false)}
               onClockOut={onClockOut}
+              onOpenHowToPlay={() => {
+                setIsSettingsOpen(false);
+
+                onOpenHowToPlay();
+              }}
             />
           )}
         </AnimatePresence>

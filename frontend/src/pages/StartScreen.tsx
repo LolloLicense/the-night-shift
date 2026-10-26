@@ -4,10 +4,11 @@ import type { Player } from "../types/game";
 
 type StartScreenProps = {
   players: Player[];
+  onOpenHowToPlay: () => void;
   onStart: (name: string) => void;
 };
 
-function StartScreen({ players, onStart }: StartScreenProps) {
+function StartScreen({ players, onStart, onOpenHowToPlay }: StartScreenProps) {
   const [showClockIn, setShowClockIn] = useState(false);
   return (
     <section className="relative min-h-screen bg-[url('/images/night-shift-start.webp')] bg-cover bg-center">
@@ -31,6 +32,7 @@ function StartScreen({ players, onStart }: StartScreenProps) {
             </button>
             <button
               type="button"
+              onClick={onOpenHowToPlay}
               className="cursor-pointer rounded-lg font-semibold uppercase backdrop-blur-md border border-cream/50 bg-ink/40 px-8 py-3 text-sm tracking-widest text-cream"
             >
               How to play

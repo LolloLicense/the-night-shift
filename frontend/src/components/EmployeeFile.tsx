@@ -22,7 +22,7 @@ function EmployeeFile({ player }: EmployeeFileProps) {
         ? "Acceptable. For now."
         : player.totalUnhappyGuests < 10
           ? "A pattern is emerging."
-          : "We need to talk.";
+          : "Jury is still out";
 
   return (
     <motion.div

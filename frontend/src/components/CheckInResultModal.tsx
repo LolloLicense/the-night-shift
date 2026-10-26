@@ -26,10 +26,10 @@ function CheckInResultModal({
             Check in complete
           </p>
 
-          <div className="grid grid-cols-[8rem_1fr_5rem] items-center border-b-2 border-ruby p-4">
+          <div className="grid grid-cols-[8rem_1fr_4rem] items-center border-b-2 border-ruby p-4">
             <img src={guest.portrait} alt="" className="size-22 object-cover" />
 
-            <h2 className="font-display text-3xl font-bold leading-tight uppercase">
+            <h2 className="font-display text-2xl font-bold leading-tight uppercase">
               {guest.name}
             </h2>
           </div>

@@ -11,7 +11,7 @@ function GuestCard({ guest }: GuestCardProps) {
       <img src="/images/guestcard.webp" alt="" className="block w-full" />
 
       <div className="absolute top-[12%] left-[12%] w-[75%] text-ink">
-        <div className="flex items-center gap-[4%] border-b-[0.5cqw] border-ruby pb-[3cqw]">
+        <div className="flex items-center gap-[3%] border-b-[0.5cqw] border-ruby pb-[3cqw]">
           <img
             src={guest.portrait}
             alt={guest.name}

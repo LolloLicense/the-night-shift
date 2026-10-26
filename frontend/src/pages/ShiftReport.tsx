@@ -5,7 +5,8 @@ type ShiftReportProps = {
   happyGuests: number;
   unhappyGuests: number;
   totalGuests: number;
-  onClockOut: () => void;
+  nightNumber: number;
+  onNextShift: () => void;
 };
 
 function ShiftReport({
@@ -15,11 +16,12 @@ function ShiftReport({
   happyGuests,
   unhappyGuests,
   totalGuests,
-  onClockOut,
+  nightNumber,
+  onNextShift,
 }: ShiftReportProps) {
   return (
     <section className="relative min-h-screen bg-[url('/images/night-brief.webp')] bg-cover bg-center">
-      <div className="absolute top-[18%] left-1/2 w-96 -translate-x-1/2 text-ink -rotate-1">
+      <div className="absolute top-[25%] left-1/2 w-96 -translate-x-1/2 text-ink -rotate-1">
         <h1 className="border-b-2 border-ruby pb-2 text-center font-display text-2xl font-bold uppercase">
           Shift Complete
         </h1>
@@ -61,22 +63,26 @@ function ShiftReport({
             <span>${totalEarnings}</span>
           </div>
         </div>
-        <div className="mt-7 text-center">
+        <div className="mt-4 text-center">
           <p className="font-display text-base font-bold">
-            Ready for another night?
+            {nightNumber === 20
+              ? "That's the last one."
+              : "Ready for another night?"}
           </p>
 
           <p className="mx-auto mt-1 max-w-64 font-sans text-xs leading-5 text-ink">
-            Clock out to save your progress and start your next shift.
+            {nightNumber === 20
+              ? "Management would like a word."
+              : "Management expects you back at the desk."}
           </p>
         </div>
 
         <button
           type="button"
-          onClick={onClockOut}
+          onClick={onNextShift}
           className="mx-auto mt-4 block cursor-pointer rounded-md bg-ruby px-6 py-3 font-sans text-xs font-semibold tracking-widest text-cream uppercase"
         >
-          Next shift
+          {nightNumber === 20 ? "View performance review" : "Next shift"}
         </button>
       </div>
     </section>

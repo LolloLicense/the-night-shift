@@ -4,9 +4,14 @@ import { motion } from "motion/react";
 type SettingsModalProps = {
   onClose: () => void;
   onClockOut: () => void;
+  onOpenHowToPlay: () => void;
 };
 
-function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
+function SettingsModal({
+  onClose,
+  onClockOut,
+  onOpenHowToPlay,
+}: SettingsModalProps) {
   const [showClockOutWarning, setShowClockOutWarning] = useState(false);
 
   return (
@@ -65,6 +70,7 @@ function SettingsModal({ onClose, onClockOut }: SettingsModalProps) {
             <div className="mt-6 flex flex-col gap-3">
               <button
                 type="button"
+                onClick={onOpenHowToPlay}
                 className="cursor-pointer rounded-lg border border-cream/50 px-8 py-3 text-sm font-semibold tracking-widest uppercase"
               >
                 How to play
